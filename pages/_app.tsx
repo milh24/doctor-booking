@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { makeStore } from "redux/store";
 import "styles/globals.css";
 
-function MyApp({ Component, ...pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={makeStore()}>
       <Head>
