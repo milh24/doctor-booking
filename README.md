@@ -1,34 +1,76 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Doctor Booking
 
-## Getting Started
+[Demo](https://doctor-booking-gamma.vercel.app/)
 
-First, run the development server:
+1. Install dependencies
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+   `yarn install`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create .env at the project root directory
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+   .env example:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+   ```
+   API_KEY=<api-key>
+   API_HOST=<api-host>
+   NEXT_PUBLIC_SITE_NAME=<site-name>
+   ```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+3. Run locally
 
-## Learn More
+   `yarn dev`
 
-To learn more about Next.js, take a look at the following resources:
+## Choice of Package
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### next
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- the most popular SSR solution for React, ability to handle logic at server side
+- easy SEO, good for catalog site
+- easy deployment on Vercel, free for project like this
 
-## Deploy on Vercel
+### redux
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- most popular state management package
+- good for website with complex business logic
+- small scale website like this probably dont need this, just for demostration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### redux-logger
+
+- showing action in redux store
+- help debugging for redux
+
+### @reduxjs/toolkit
+
+- write much less boilerplate code to get redux running
+
+### styled-components
+
+- inline css, every components and pages can have their own style without messy file structure
+
+## Potential Improvement
+
+- blog - health care content, user story
+- user portal - manage bookings in one place
+- doctor timetable - showing doctor availabilty before booking
+- advance search - search doctor by specific requirement e.g. price, gender, specialty, lcoation etc.
+- doctor review rating section - improve interaction, prevent bad doctor
+- message - email or sms confirmation, reminder
+
+## Production consideration
+
+- For Vercel, setup enviroment value properly before deployment
+
+## Assumptions
+
+- doctor are free for booking within office hour
+- user can have at most 1 booking per doctor
+- user can have mutliple bookings at the same timeslot across doctors
+- user can canel booking at anytime
+
+## Testing
+
+- snapshot test on compenents and pages to ensure correct rendering behavior
+- using jest mock to test component click interactions
+- unit test on util functions to ensure correct output
+- using jest mock to dispatch actions to test redux store behaviour
+- test api the ensure correct response

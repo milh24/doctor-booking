@@ -41,7 +41,6 @@ appListenerMiddleware.startListening({
         },
         body: JSON.stringify({ status: "cancelled" }),
       });
-      listenerApi.dispatch(setLoading(false));
       Router.reload();
     } catch (e) {
       listenerApi.dispatch(setLoading(false));
