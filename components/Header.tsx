@@ -1,16 +1,18 @@
-import { useRouter } from "next/router"
-import styled from "styled-components"
-import Colors from "../styles/colors"
+import { useRouter } from "next/router";
+import styled from "styled-components";
+import Colors from "styles/colors";
 
 export default function Header() {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <Container>
       <ContentContainer>
-        <Logo onClick={() => router.push("/")}>DoctorBooking</Logo>
+        <Logo onClick={() => router.push("/")}>
+          {process.env.NEXT_PUBLIC_SITE_NAME}
+        </Logo>
       </ContentContainer>
     </Container>
-  )
+  );
 }
 
 const Container = styled.div`
@@ -24,14 +26,14 @@ const Container = styled.div`
   padding-bottom: 12px;
   background-color: ${Colors.primary};
   color: ${Colors.white};
-`
+`;
 
 const ContentContainer = styled.div`
   max-width: 968px;
   margin-left: auto;
   display: flex;
   margin-right: auto;
-`
+`;
 
 const Logo = styled.div`
   font-weight: 900;
@@ -40,4 +42,4 @@ const Logo = styled.div`
   &:hover {
     opacity: 0.7;
   }
-`
+`;

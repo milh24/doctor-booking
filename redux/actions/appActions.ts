@@ -1,11 +1,18 @@
-import { createAction } from "@reduxjs/toolkit"
-import { HYDRATE } from "next-redux-wrapper"
+import { createAction } from "@reduxjs/toolkit";
 
 export interface AppState {
-  doctors: Doctor[]
+  loading: boolean;
 }
 
-export const addDoctor = createAction<Doctor>("app/addDoctor")
-export const hydrate = createAction<{ app: AppState }>(HYDRATE)
+export const setLoading = createAction<boolean>("app/setLoading");
 
-export type AppActions = typeof addDoctor
+export const createBooking = createAction<{
+  doctorId: string;
+  name: string;
+  date: string;
+  start: number;
+}>("app/createBooking");
+
+export const cancelBooking = createAction<string>("app/cancelBooking");
+
+export type AppActions = typeof createBooking | typeof cancelBooking;

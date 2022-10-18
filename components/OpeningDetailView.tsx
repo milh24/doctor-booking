@@ -1,15 +1,15 @@
-import { CSSProperties } from "react"
-import styled from "styled-components"
-import Colors from "../styles/colors"
-import Util from "../utils/utils"
-import Typography from "./Typography"
+import { CSSProperties } from "react";
+import styled from "styled-components";
+import Colors from "styles/colors";
+import Util from "utils/utils";
+import Typography from "./Typography";
 
 export default function OpeningDetailView(props: {
-  className?: string
-  style?: CSSProperties
-  openingHours: OpeningHour[]
+  className?: string;
+  style?: CSSProperties;
+  openingHours: OpeningHour[];
 }) {
-  const { className, style, openingHours } = props
+  const { className, style, openingHours } = props;
 
   return (
     <Container className={className} style={style}>
@@ -17,26 +17,26 @@ export default function OpeningDetailView(props: {
         <OpeningItemContainer key={e.day}>
           <OpeningItem isClosed={e.isClosed}>{e.day}</OpeningItem>
           {!e.isClosed && (
-            <Typography>{`${Util.formatTime(e.start)} - ${Util.formatTime(
-              e.end,
-            )}`}</Typography>
+            <Typography>{`${Util.formatTime(
+              Number(e.start)
+            )} - ${Util.formatTime(Number(e.end))}`}</Typography>
           )}
         </OpeningItemContainer>
       ))}
     </Container>
-  )
+  );
 }
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-`
+`;
 
 const OpeningItemContainer = styled.div`
   display: flex;
   margin-bottom: 8px;
-`
+`;
 
 const OpeningItem = styled.div<{ isClosed: boolean }>`
   display: flex;
@@ -48,4 +48,4 @@ const OpeningItem = styled.div<{ isClosed: boolean }>`
   margin-right: 8px;
   width: 48px;
   background-color: ${(p) => (p.isClosed ? Colors.grey : Colors.primaryLight)};
-`
+`;

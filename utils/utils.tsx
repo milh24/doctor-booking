@@ -1,28 +1,27 @@
 export default class Util {
   static formatAddress(address: Address) {
-    const { district, line_1, line_2 } = address
-    return `${line_2}, ${line_1}, ${district}`
+    const { district, line_1, line_2 } = address;
+    return `${line_2}, ${line_1}, ${district}`;
   }
 
   static sortDay(openingHours: OpeningHour[]) {
-    const dayOrder = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+    const dayOrder = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
     return openingHours.sort((a, b) => {
       if (dayOrder.indexOf(a.day) == dayOrder.indexOf(b.day)) {
-        return 0
+        return 0;
       }
       if (dayOrder.indexOf(a.day) > dayOrder.indexOf(b.day)) {
-        return 1
+        return 1;
       }
-      return -1
-    })
+      return -1;
+    });
   }
 
-  static formatTime(time: string) {
-    const composition = time.split(".")
-    const hour = composition[0]
-    const minute = Math.round((Number(composition[1]) / 100) * 60)
+  static formatTime(time: number) {
+    const hour = Math.floor(time);
+    const minute = Math.round(((time - hour) / 1) * 60)
       .toString()
-      .padStart(2, "0")
-    return `${hour}:${minute} ${time < "12.00" ? "AM" : "PM"}`
+      .padStart(2, "0");
+    return `${hour}:${minute} ${hour < 12 ? "AM" : "PM"}`;
   }
 }

@@ -1,20 +1,19 @@
-import { InferGetServerSidePropsType } from "next"
-import Head from "next/head"
-import { connect } from "react-redux"
-import Avatar from "../../components/Avatar"
-import BookingForm from "../../components/BookingForm"
-import OpeningDetailView from "../../components/OpeningDetailView"
-import Typography from "../../components/Typography"
-import { addDoctor } from "../../redux/actions/appActions"
-import { RootState, wrapper } from "../../redux/store"
-import Service from "../../services/services"
-import Util from "../../utils/utils"
+import Avatar from "components/Avatar";
+import BookingCard from "components/BookingCard";
+import BookingForm from "components/BookingForm";
+import OpeningDetailView from "components/OpeningDetailView";
+import Typography from "components/Typography";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Head from "next/head";
+import Service from "services/services";
+import Util from "utils/utils";
 
 function DoctorPorfile(
-  props: InferGetServerSidePropsType<typeof getServerSideProps>,
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
-  const { doctor } = props
-  const { name, address, opening_hours } = doctor
+  const { doctor, booking } = props;
+  const { name, address, opening_hours } = doctor;
+
   return (
     <>
       <Head>
@@ -35,42 +34,38 @@ function DoctorPorfile(
         style={{ marginTop: 12 }}
         openingHours={opening_hours}
       />
-      <BookingForm style={{ marginTop: 12 }} />
+      {booking && <BookingCard style={{ marginTop: 12 }} booking={booking} />}
+      {!booking && <BookingForm style={{ marginTop: 12 }} doctor={doctor} />}
     </>
-  )
+  );
 }
 
-export default connect((state: RootState) => state)(DoctorPorfile)
+export default DoctorPorfile;
 
-export const getServerSideProps = wrapper.getServerSideProps<{
-  doctor: Doctor
-}>((store) => async (context) => {
-  const doctorId = context.params?.id?.toString()
+export const getServerSideProps: GetServerSideProps<{
+  doctor: Doctor;
+  booking: Booking | null;
+}> = async (context) => {
+  const doctorId = context.params?.id?.toString();
   if (!doctorId) {
     return {
       notFound: true,
-    }
+    };
   }
-  console.log(store.getState().app.doctors)
-  const cache = store.getState().app.doctors.find((e) => e.id == doctorId)
-  if (cache) {
-    console.log("use cache")
-    return {
-      props: {
-        doctor: cache,
-      },
-    }
-  }
-  const doctor = await Service.getDoctor(doctorId)
+  const doctor = await Service.getDoctor(doctorId);
   if (!doctor) {
     return {
       notFound: true,
-    }
+    };
   }
-  store.dispatch(addDoctor(doctor))
+  const bookings = await Service.getBookings();
   return {
     props: {
       doctor: doctor,
+      booking:
+        bookings.find(
+          (e) => e.doctorId == doctor.id && e.status == "confirmed"
+        ) ?? null,
     },
-  }
-})
+  };
+};

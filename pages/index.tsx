@@ -1,7 +1,7 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next"
-import styled from "styled-components"
-import DoctorCard from "../components/DoctorCard"
-import Service from "../services/services"
+import DoctorCard from "components/DoctorCard";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Service from "services/services";
+import styled from "styled-components";
 
 function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
@@ -10,10 +10,10 @@ function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
         <DoctorCard key={e.id} doctor={e} />
       ))}
     </Grid>
-  )
+  );
 }
 
-export default Home
+export default Home;
 
 const Grid = styled.div`
   display: grid;
@@ -24,14 +24,14 @@ const Grid = styled.div`
   @media only screen and (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
   }
-`
+`;
 
 export const getServerSideProps: GetServerSideProps<{
-  doctors: Doctor[]
+  doctors: Doctor[];
 }> = async () => {
   return {
     props: {
       doctors: await Service.getDoctors(),
     },
-  }
-}
+  };
+};

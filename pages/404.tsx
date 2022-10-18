@@ -1,9 +1,9 @@
+import FilledButton from "components/FilledButton"
+import Typography from "components/Typography"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import styled from "styled-components"
-import FilledButton from "../components/FilledButton"
-import Typography from "../components/Typography"
-import Colors from "../styles/colors"
+import Colors from "styles/colors"
 
 function NotFound() {
   const router = useRouter()

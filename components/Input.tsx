@@ -1,27 +1,31 @@
-import { CSSProperties } from "react"
-import styled from "styled-components"
-import Colors from "../styles/colors"
-import Typography from "./Typography"
+import { CSSProperties } from "react";
+import styled from "styled-components";
+import Colors from "styles/colors";
+import Typography from "./Typography";
 
 export default function Input(props: {
-  className?: string
-  style?: CSSProperties
-  label: string
-  placeholder: string
+  className?: string;
+  style?: CSSProperties;
+  label: string;
+  placeholder: string;
+  onChange: (value: string) => void;
 }) {
-  const { className, style, label, placeholder } = props
+  const { className, style, label, placeholder, onChange } = props;
 
   return (
     <Container className={className} style={style}>
       <Typography variant="h4" color={Colors.primaryLight}>
         {label}
       </Typography>
-      <InputContainer placeholder={placeholder} />
+      <InputContainer
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+      />
     </Container>
-  )
+  );
 }
 
-const Container = styled.div``
+const Container = styled.div``;
 
 const InputContainer = styled.input`
   padding: 8px 16px;
@@ -34,4 +38,4 @@ const InputContainer = styled.input`
   &:focus {
     border: 2px solid ${Colors.primary};
   }
-`
+`;

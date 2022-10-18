@@ -14,3 +14,17 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.react-calendar {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #f4f6fa !important;
+}
+
+.react-calendar__tile--now {
+  background: #faac1f !important;
+}
+
+.react-calendar__tile--active {
+  background: #695cd4 !important;
+}

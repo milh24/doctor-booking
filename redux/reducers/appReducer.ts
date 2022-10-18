@@ -1,18 +1,13 @@
-import { createReducer } from "@reduxjs/toolkit"
-import { addDoctor, AppState, hydrate } from "../actions/appActions"
+import { createReducer } from "@reduxjs/toolkit";
+import { AppState, setLoading } from "redux/actions/appActions";
 
 const initialState: AppState = {
-  doctors: [],
-}
+  loading: false,
+};
 
 export default createReducer(initialState, (builder) => {
-  builder.addCase(hydrate, (state, action) => ({
+  builder.addCase(setLoading, (state, action) => ({
     ...state,
-    ...action.payload.app,
-  }))
-
-  builder.addCase(addDoctor, (state, action) => ({
-    ...state,
-    doctors: [...state.doctors, action.payload],
-  }))
-})
+    loading: action.payload,
+  }));
+});

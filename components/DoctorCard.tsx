@@ -1,19 +1,19 @@
-import { useRouter } from "next/router"
-import styled, { CSSProperties } from "styled-components"
-import Colors from "../styles/colors"
-import Util from "../utils/utils"
-import Avatar from "./Avatar"
-import OpeningView from "./OpeningView"
-import Typography from "./Typography"
+import { useRouter } from "next/router";
+import styled, { CSSProperties } from "styled-components";
+import Colors from "styles/colors";
+import Util from "utils/utils";
+import Avatar from "./Avatar";
+import OpeningView from "./OpeningView";
+import Typography from "./Typography";
 
 export default function DoctorCard(props: {
-  className?: string
-  style?: CSSProperties
-  doctor: Doctor
+  className?: string;
+  style?: CSSProperties;
+  doctor: Doctor;
 }) {
-  const { className, style, doctor } = props
-  const { name, address, opening_hours } = doctor
-  const router = useRouter()
+  const { className, style, doctor } = props;
+  const { name, address, opening_hours } = doctor;
+  const router = useRouter();
 
   return (
     <Container
@@ -31,7 +31,7 @@ export default function DoctorCard(props: {
       </Typography>
       <OpeningView style={{ marginTop: 12 }} openingHours={opening_hours} />
     </Container>
-  )
+  );
 }
 
 const Container = styled.div`
@@ -42,4 +42,4 @@ const Container = styled.div`
   &:hover {
     background-color: ${Colors.filled};
   }
-`
+`;
