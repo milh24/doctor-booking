@@ -1,7 +1,7 @@
 export default class Util {
   static formatAddress(address: Address) {
     const { district, line_1, line_2 } = address;
-    return `${line_2}, ${line_1}, ${district}`;
+    return `${line_1}, ${line_2}, ${district}`;
   }
 
   static sortDay(openingHours: OpeningHour[]) {
