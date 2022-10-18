@@ -1,9 +1,12 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next"
+import { InferGetServerSidePropsType } from "next"
 import Head from "next/head"
+import { connect } from "react-redux"
 import Avatar from "../../components/Avatar"
 import BookingForm from "../../components/BookingForm"
 import OpeningDetailView from "../../components/OpeningDetailView"
 import Typography from "../../components/Typography"
+import { addDoctor } from "../../redux/actions/appActions"
+import { RootState, wrapper } from "../../redux/store"
 import Service from "../../services/services"
 import Util from "../../utils/utils"
 
@@ -22,9 +25,7 @@ function DoctorPorfile(
       </Typography>
       <Avatar
         style={{ marginTop: 12 }}
-        src={`https://avatars.dicebear.com/api/micah/${JSON.stringify(
-          doctor,
-        )}.svg`}
+        src={`https://avatars.dicebear.com/api/micah/${name}.svg`}
         size={96}
       />
       <Typography style={{ marginTop: 12 }} variant="h4">
@@ -39,25 +40,37 @@ function DoctorPorfile(
   )
 }
 
-export default DoctorPorfile
+export default connect((state: RootState) => state)(DoctorPorfile)
 
-export const getServerSideProps: GetServerSideProps<{
+export const getServerSideProps = wrapper.getServerSideProps<{
   doctor: Doctor
-}> = async (context) => {
-  if (!context.params?.id) {
+}>((store) => async (context) => {
+  const doctorId = context.params?.id?.toString()
+  if (!doctorId) {
     return {
       notFound: true,
     }
   }
-  const doctor = await Service.getDoctor(context.params?.id! as string)
+  console.log(store.getState().app.doctors)
+  const cache = store.getState().app.doctors.find((e) => e.id == doctorId)
+  if (cache) {
+    console.log("use cache")
+    return {
+      props: {
+        doctor: cache,
+      },
+    }
+  }
+  const doctor = await Service.getDoctor(doctorId)
   if (!doctor) {
     return {
       notFound: true,
     }
   }
+  store.dispatch(addDoctor(doctor))
   return {
     props: {
       doctor: doctor,
     },
   }
-}
+})

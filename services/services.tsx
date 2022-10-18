@@ -21,7 +21,7 @@ export default class Service {
     }
   }
 
-  static async getDoctor(id: string) {
+  static async getDoctor(id: string): Promise<Doctor | null> {
     try {
       const res = await fetch(`${process.env.API_HOST}/doctor/${id}`, {
         method: "GET",

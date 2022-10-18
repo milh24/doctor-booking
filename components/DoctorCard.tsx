@@ -24,9 +24,7 @@ export default function DoctorCard(props: {
       <Typography variant="h2">{name}</Typography>
       <Avatar
         style={{ marginTop: 12 }}
-        src={`https://avatars.dicebear.com/api/micah/${JSON.stringify(
-          doctor,
-        )}.svg`}
+        src={`https://avatars.dicebear.com/api/micah/${name}.svg`}
       />
       <Typography style={{ marginTop: 12 }}>
         {Util.formatAddress(address)}
